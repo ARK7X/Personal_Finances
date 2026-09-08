@@ -1,15 +1,41 @@
-import "../Styles/CardContainer.css"
-import { CardControl } from "./CardControl"
+import { useState } from "react";
+import "../Styles/CardContainer.css";
+import { CardControl } from "./CardControl";
 
-export const CardContainer=() => {
+type item = Array<{
+    description: string,
+    amount: number
+}>
 
-return(
+export const CardContainer = () => {
+  const [items, setItems] = useState<item>([]);
+
+  const handleClick = () => {
+    setItems([
+      ...items,
+      {
+      description: "Example",
+      amount: 12,
+      }
+    ]);
+  };
+  return (
     <>
-     <div className="main-container">
-         <CardControl/>
-          <CardControl/>
-     </div>
+      <h3>Incomes</h3>
+      <div className="main-container container">
+        {
+            items.map((item) => (
+                <div>
+                    <p>{item.description}</p>
+                    <p>{item.amount}</p>
+                </div>
+            ))
+        }
+        <CardControl />
+        <button type="button" onClick={handleClick}>
+          Prueba
+        </button>
+      </div>
     </>
-   
-)
-}
+  );
+};
