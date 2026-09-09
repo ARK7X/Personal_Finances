@@ -4,18 +4,18 @@ import { CardControl } from "./CardControl";
 
 type item = Array<{
     description: string,
-    amount: number
+    amount: string
 }>
 
 export const CardContainer = () => {
   const [items, setItems] = useState<item>([]);
 
-  const handleClick = () => {
+  const handleClick = (description:string, amount:string) => {
     setItems([
       ...items,
       {
-      description: "Example",
-      amount: 12,
+      description: description,
+      amount: amount,
       }
     ]);
   };
@@ -31,10 +31,7 @@ export const CardContainer = () => {
                 </div>
             ))
         }
-        <CardControl />
-        <button type="button" onClick={handleClick}>
-          Prueba
-        </button>
+        <CardControl handleClick={handleClick}/>
       </div>
     </>
   );

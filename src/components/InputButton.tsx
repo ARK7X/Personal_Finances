@@ -1,12 +1,13 @@
 
 type propsButton = {
-    nameButton:string
+    nameButton:string,
+    handleClick: () => void
 }
 
 export const InputButton = (props:propsButton) => {
   return (
     <>
-        <button type="button">{props.nameButton}</button>
+        <button type="button" onClick={() => props.handleClick()}>{props.nameButton}</button>
     </>
   )
 }
