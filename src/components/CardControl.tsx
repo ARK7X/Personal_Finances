@@ -1,44 +1,53 @@
-import { InputDescription } from "./InputDescription"
-import { InputButton } from "./InputButton"
-import { useState } from "react"
+import { InputDescription } from "./InputDescription";
+import { InputButton } from "./InputButton";
+import { useState } from "react";
 
 type propsCardControl = {
-    handleClick: (
-        description: string,
-        amount: string
-    ) => void
-}
+  handleClick: (description: string, amount: string) => void;
+};
 
 type forms = {
-    description: string,
-    amount: string
-}
+  description: string;
+  amount: string;
+};
 
-export const CardControl = (props:propsCardControl) => {
-    
-    const [form, setForms] = useState<any>({})
+export const CardControl = (props: propsCardControl) => {
+  const [forms, setForms] = useState<forms>({ description: " ", amount: " " });
 
-    const handleOnChangeInput = (name:string, amount: string) => {
-        console.log(name, amount);
-        
-        setForms({
-            ...form,
-                description: name,
-                amount: amount
-        })
+  const handleOnChangeInput = (name: string, value: string) => {
+    console.log(value);
+    if (name == "Description") {
+      setForms({
+        ...forms,
+        description: value,
+      });
+    } else {
+      setForms({
+        ...forms,
+        amount: value,
+      });
     }
+  };
 
-    const sendForm = () => {
-        console.log(form);
-        
-        props.handleClick(form[0], form[1])
-    }
+  const sendForm = () => {
+    props.handleClick(forms.description, forms.amount)
+  };
 
-    return(
-        <div className="CardControlContainer">
-            <InputDescription label={"Description"} placeHolder={"Type your description"} value={form[0]} handleOnChangeInput={handleOnChangeInput}/>
-            <InputDescription label={"Amount"} placeHolder={"Type the amount"} value={form[1]} handleOnChangeInput={handleOnChangeInput}/>
-            <InputButton nameButton="Add" handleClick={sendForm}/>
-        </div>
-    )
-}
+  return (
+    <div className="CardControlContainer">
+      <InputDescription
+        label="Description"
+        placeHolder="Description"
+        value={forms.description}
+        handleOnChangeInput={handleOnChangeInput}
+      />
+      <InputDescription
+        label="Amount"
+        placeHolder="Amount"
+        value={forms.amount}
+        handleOnChangeInput={handleOnChangeInput}
+      />
+      <InputButton nameButton="Add" handleClick={sendForm} />
+    </div>
+  );
+};
