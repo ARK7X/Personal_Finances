@@ -1,4 +1,6 @@
 .main-container{
+    width: 450px;
+    height: fit-content;
     border: solid 2px;
     border-radius: 5px;
     border-color: dimgray;
@@ -11,6 +13,20 @@
     flex-wrap: nowrap;
     flex-direction: row;
     align-items: center;
+}
+
+.cardItem {
+    margin: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    border: solid 2px;
+    border-radius: 5px;
+    border-color: dimgray;
+}
+
+.cardItem p {
+    padding: 5px 15px 5px 15px;
 }
 
 .CardControlContainer button {
