@@ -15,7 +15,6 @@ export const CardControl = (props: propsCardControl) => {
   const [forms, setForms] = useState<forms>({description: " ", amount: " " });
 
   const handleOnChangeInput = (name: string, value: string) => {
-    console.log(value);
     const whichInput: boolean = name === "Description";
     whichInput
       ? setForms({ ...forms, description: value })
