@@ -6,15 +6,6 @@
     border-color: dimgray;
 }
 
-.CardControlContainer {
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
-}
-
 .cardItem {
     margin: 10px 10px 10px 10px;
     display: flex;
@@ -27,6 +18,20 @@
 
 .cardItem p {
     padding: 5px 15px 5px 15px;
+}
+
+.cardItem button {
+    margin: 15px 5px 15px 5px;
+    padding: 5px;
+}
+
+.CardControlContainer {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
 }
 
 .CardControlContainer button {
