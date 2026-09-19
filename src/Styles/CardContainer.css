@@ -45,3 +45,18 @@
     flex-wrap: nowrap;
     flex-direction: column;
 }
+
+.InputDescription .isEmpty:focus-visible {
+    outline: 2px solid rgba(220, 20, 60, 0.5);
+    box-shadow: 1px 1px 1px 5px rgba(220, 20, 60, 0.5);
+}
+
+.InputDescription .isNotEmpty:focus-visible {
+    outline: 2px solid rgba(16, 245, 0, 0.5);
+    box-shadow: 1px 1px 1px 5px rgba(16, 245, 60, 0.5);
+}
+
+.fillWarning {
+    color: crimson;
+    margin: 0px 0px 10px 10px;
+}
