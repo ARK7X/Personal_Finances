@@ -63,9 +63,11 @@ export const CardControl = (props: propsCardControl) => {
           viewBox="0 0 16 16"
           handleClick={sendForm}
         />
-        {(isDescriptionEmpty || isAmountEmpty) && (
+        {(isDescriptionEmpty || isAmountEmpty) ? (
           <p className="fillWarning">You must fill all the empty spaces</p>
-        )}
+        ):
+          <p className="fillSuccess">Great!</p>
+        }
       </div>
     </>
   );
