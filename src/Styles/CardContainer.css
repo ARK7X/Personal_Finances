@@ -83,14 +83,14 @@
     fill:  crimson;
 }
 
-.cardItem button .confirmButton {
+.CardControlContainer button .confirmButton {
     margin: 25px 5px 5px 15px;
     width: 24px;
     height: 24px;
     fill: aliceblue;
 }
 
-.cardItem button .confirmButton:hover {
+.CardControlContainer button .confirmButton:hover {
     fill:  green;
 }
 
@@ -146,5 +146,10 @@
 
 .CardControlContainer .fillSuccess {
     color: green;
+    margin: 0px 0px 10px 10px;
+}
+
+.CardControlContainer .editWarning {
+    color: yellow;
     margin: 0px 0px 10px 10px;
 }
