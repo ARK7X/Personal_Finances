@@ -1,8 +1,9 @@
 type InputProps = {
-  label: string;
-  placeHolder: string;
-  value: string;
-  isEmpty?: boolean;
+  label: string,
+  placeHolder: string,
+  value: string,
+  isEmpty?: boolean,
+  disabled?:boolean,
   handleOnChangeInput?: (name: string, amount: string) => void;
 };
 
@@ -16,6 +17,7 @@ export const InputDescription = (props: InputProps) => {
         placeholder={props.placeHolder}
         name={props.label}
         value={props.value}
+        disabled={props.disabled}
         onChange={(e) =>
           props.handleOnChangeInput?.(e.target.name, e.target.value)
         }
