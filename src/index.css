@@ -3,3 +3,12 @@ body {
   font-family: 'Courier New', Courier, monospace;
   color: #DEFFFFFF;
 }
+
+.container-app {
+    margin: 10px;
+    padding: 0;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
