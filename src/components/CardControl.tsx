@@ -1,5 +1,6 @@
 import { InputDescription } from "./InputDescription";
 import { InputButton } from "./InputButton";
+import { MessageComponent } from "./MessageComponent";
 
 type propsCardControl = {
   valueDescription:string,
@@ -9,6 +10,7 @@ type propsCardControl = {
   editClicked:boolean,
   editId:string,
   message:string,
+  classID:string,
   handleConfirmEdit: () => void,
   handleOnChangeInput: (name: string, value: string) => void,
   handleSendForm: () => void;
@@ -50,7 +52,7 @@ export const CardControl = (props:propsCardControl) => {
               handleClick={props.handleSendForm}
           />
         }
-        <p>{props.message}</p>
+        <MessageComponent value={props.message} classID={props.classID} />
       </div>
     </>
   );

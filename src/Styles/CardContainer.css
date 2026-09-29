@@ -1,5 +1,9 @@
+.wholeCard {
+    width: 100%;
+}
+
 .main-container{
-    width: 450px;
+    width: 100%;
     height: 400px;
     display: flex;
     flex-wrap: nowrap;
@@ -95,11 +99,12 @@
 }
 
 .CardControlContainer {
+    width: 100%;
+    box-sizing: border-box;
     background-color: #121212;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    top: 23.2rem;
     align-items:center;
 }
 

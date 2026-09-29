@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {MESSAGES, type useCardFunctionalities } from "../interfaces/personalFinancesInterfaces";
+import {MESSAGE_CLASS, MESSAGES, type useCardFunctionalities } from "../interfaces/personalFinancesInterfaces";
 
 export const useCardFunctionalitiesHook = ():useCardFunctionalities => {
 
@@ -8,7 +8,7 @@ export const useCardFunctionalitiesHook = ():useCardFunctionalities => {
   const [isAmountEmpty, setIsAmountEmpty] = useState<useCardFunctionalities["isAmountEmpty"]>(true)
   const [isEditClicked, setIsEditClicked] = useState<useCardFunctionalities["isEditClicked"]>(false)
   const [editID, setEditID] = useState<useCardFunctionalities["editID"]>("")
-  const [message, setMessage] = useState<useCardFunctionalities["message"]>(MESSAGES.FILL_WARNING)
+  const [message, setMessage] = useState<useCardFunctionalities["message"]>({message: MESSAGES.FILL_WARNING, classID: MESSAGE_CLASS.FILL_WARNING})
 
   const formsMachine = (setFormState: React.Dispatch<React.SetStateAction<useCardFunctionalities["forms"]>>) => {
       return (name:string, value:string) => {
@@ -32,9 +32,15 @@ export const useCardFunctionalitiesHook = ():useCardFunctionalities => {
 
   const setMessages = () => {
     isEditClicked ?
-      isDescriptionEmpty !== true || isAmountEmpty !== true ? setMessage(MESSAGES.SUCCESS) : setMessage(MESSAGES.EDIT_WARNING)
+      isDescriptionEmpty !== true || isAmountEmpty !== true ? 
+        setMessage((prev) => ({...prev, message: MESSAGES.SUCCESS, classID:MESSAGE_CLASS.SUCCESS})) 
+      : 
+        setMessage((prev)=> ({...prev, message:MESSAGES.EDIT_WARNING, classID:MESSAGE_CLASS.EDIT_WARNING}))
     :
-      isDescriptionEmpty || isAmountEmpty ? setMessage(MESSAGES.FILL_WARNING) : setMessage(MESSAGES.SUCCESS)
+      isDescriptionEmpty || isAmountEmpty ? 
+        setMessage((prev) => ({...prev, message: MESSAGES.FILL_WARNING, classID:MESSAGE_CLASS.FILL_WARNING})) 
+      : 
+        setMessage((prev) => ({...prev, message:MESSAGES.SUCCESS, classID: MESSAGE_CLASS.SUCCESS}))
   }
 
   const handleClean = () => {
@@ -47,10 +53,13 @@ export const useCardFunctionalitiesHook = ():useCardFunctionalities => {
   const handleEditClick = (id:string) => {
       setEditID(id)
       setIsEditClicked(true);
-      setMessage(MESSAGES.EDIT_WARNING)
+      setMessage((prev)=> ({...prev, message:MESSAGES.EDIT_WARNING, classID:MESSAGE_CLASS.EDIT_WARNING}))
+      setIsAmountEmpty(false)
+      setIsDescriptionEmpty(false)
   }
 
   const handleEditEnd = () => {
+    setMessage((prev) => ({...prev, message: MESSAGES.FILL_WARNING, classID:MESSAGE_CLASS.FILL_WARNING}))
     setIsEditClicked(false)
   }
 

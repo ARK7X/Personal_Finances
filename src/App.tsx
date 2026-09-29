@@ -1,4 +1,5 @@
 import { CardContainer } from "./components/CardContainer"
+import { CardTotals } from "./components/CardTotals"
 import { usePersonalFinancesContext } from "./hooks/usePersonalFinancesContext"
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
      <CardContainer name="Outcomes" method={Outcomes}/>
      <CardContainer name="Savings" method={Savings}/>
      <CardContainer name="Debts" method={Debts}/>
+     <CardTotals/>
     </div>
   )
 }
