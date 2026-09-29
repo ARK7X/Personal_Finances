@@ -8,6 +8,7 @@ type propsCardControl = {
   isAmountEmpty:boolean,
   editClicked:boolean,
   editId:string,
+  message:string,
   handleConfirmEdit: () => void,
   handleOnChangeInput: (name: string, value: string) => void,
   handleSendForm: () => void;
@@ -49,18 +50,7 @@ export const CardControl = (props:propsCardControl) => {
               handleClick={props.handleSendForm}
           />
         }
-        {
-          props.editClicked ?
-            (props.isAmountEmpty !== true || props.isDescriptionEmpty !== true) ?
-            <p className="fillSuccess">Great!</p>
-            :
-            <p className="editWarning">You must at least modify one parameter</p>
-          :
-            (props.isAmountEmpty || props.isDescriptionEmpty) ?
-            <p className="fillWarning">You must fill all the empty spaces</p>
-            :
-            <p className="fillSuccess">Great!</p>
-        }
+        <p>{props.message}</p>
       </div>
     </>
   );

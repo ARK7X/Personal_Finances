@@ -1,7 +1,7 @@
 import type React from "react";
 import { useState } from "react";
 import { PersonalFinancesContext } from "./PersonalFinancesContext";
-import type { personalFinancesType } from "../interfaces/personalFinancesInterfaces";
+import type { dataFunction, personalFinancesType } from "../interfaces/personalFinancesInterfaces";
 import { OPERATIONS } from "../interfaces/personalFinancesInterfaces";
 
 interface props {
@@ -9,61 +9,38 @@ interface props {
 }
 
 export const PersonalFinancesProvider = ({children}: props) => {
-      const [Items, setItems] = useState<personalFinancesType["Items"]>([]);
-      const [gastos, setGastos] = useState<personalFinancesType["Items"]>([]);
-      const [isEditClicked, setIsEditClicked] = useState<personalFinancesType["isEditClicked"]>(false);
-      const [editId, setEditId] = useState<personalFinancesType["editId"]>("");
-      const [Forms, setForms] = useState<personalFinancesType["Forms"]>({ description: "", amount: "" });
-      const [formsOutcomes, setFormsOutcomes] = useState<personalFinancesType["Forms"]>({ description: "", amount: "" });
-      const [isDescriptionEmpty, setIsDescriptionEmpty] = useState<personalFinancesType["isDescriptionEmpty"]>(true);
-      const [isAmountEmpty, setIsAmountEmpty] = useState<personalFinancesType["isAmountEmpty"]>(true);
+      const [incomes, setIncomes] = useState<personalFinancesType["Items"]>([]);
+      const [outcomes, setOutcomes] = useState<personalFinancesType["Items"]>([]);
+      const [savings, setSavings] = useState<personalFinancesType["Items"]>([]);
+      const [debts, setDebts] = useState<personalFinancesType["Items"]>([]);
+
 
       const setMachine = (
           setState: React.Dispatch<React.SetStateAction<personalFinancesType["Items"]>>,
-          state:personalFinancesType["Items"],
-          formOnChange:personalFinancesType["Forms"],
-          setForm:React.Dispatch<React.SetStateAction<personalFinancesType["Forms"]>>) =>
+          state:personalFinancesType["Items"],) =>
         {
-          return (operation:string, ID?:string) => {
+          return ({operation, description, amount, id}:dataFunction = {}) => {
               switch (operation) {
                 case OPERATIONS.ADD:
-                  if (isDescriptionEmpty !== true && isAmountEmpty !== true) {
-                    setState((prev) => [...prev, {...prev, id: crypto.randomUUID(), description: formOnChange.description, amount: formOnChange.amount}])
-                    setForm((prev) => ({...prev, description: "", amount: ""}))
-                    setIsAmountEmpty(true);
-                    setIsDescriptionEmpty(true);
+                  if (!description || !amount) {
+                    console.error("Puede que algunas de las siguientes variable sea undefined: description, amount"); // <= optimizar esta clase de verificaciones, customHook?
+                    return
+                  }
+                  if (description.length !== 0 && amount.length !== 0) {
+                    setState((prev) => [...prev, {...prev, id: crypto.randomUUID(), description: description, amount: amount}])
                   }
                   break;
             
                 case OPERATIONS.EDIT:
-                  state.map((item) => item.id == editId && (item.description = formOnChange.description, item.amount = formOnChange.amount ))
-                  setForm((prev) => ({...prev, description: "", amount: ""}))
-                  setIsEditClicked(false);
-                  setEditId("");
-                  setForms({ ...Forms, description: "", amount: "" });
-                  setIsAmountEmpty(true);
-                  setIsDescriptionEmpty(true);
-                  break;
-                
-                case OPERATIONS.EDIT_CLICK:
-                  setIsEditClicked(true);
-                  if (!ID) {
-                    console.error("Error ID esta vacío");
+                  if (!description || !amount || !id) {
+                    console.error("Puede que algunas de las siguientes variable sea undefined: description, amount, ID"); // <= optimizar esta clase de verificaciones, customHook?
                     return
                   }
-                  setEditId(ID);
-                  state.map((item) =>
-                    item.id == ID
-                    && setForms({
-                      ...formOnChange,
-                      description: item.description,
-                      amount: item.amount,
-                      })
-                    );
-                break;
+                  state.map((item) => item.id == id && (item.description = description, item.amount = amount ))
+                  break;
 
                 case OPERATIONS.DELETE:
-                  setState(state.filter((item) => item.id !== ID));
+                  setState(state.filter((item) => item.id !== id));
                 break;
 
                 default:
@@ -71,42 +48,26 @@ export const PersonalFinancesProvider = ({children}: props) => {
             }
           }
       }
-
-      const formsMachine = (setFormState: React.Dispatch<React.SetStateAction<personalFinancesType["Forms"]>>) => {
-        return (name:string, value:string) => {
-          const whichInput: boolean = name === "Description";
-          if (whichInput) {
-            setFormState((prev) => ({...prev, description:value}))
-            value.length === 0 ? setIsDescriptionEmpty(true) : setIsDescriptionEmpty(false);
-          } else {
-            setFormState((prev) => ({...prev, amount:value}))
-            value.length === 0 ? setIsAmountEmpty(true) : setIsAmountEmpty(false);
-          }
-        }
-      }
     
         return (<PersonalFinancesContext.Provider value={{
           Incomes: {
-            Items: Items, 
-            Forms: Forms,
-            isEditClicked: isEditClicked,
-            editId: editId,
-            isAmountEmpty: isAmountEmpty,
-            isDescriptionEmpty: isDescriptionEmpty,
-            addItems: setMachine(setItems, Items, Forms, setForms),
-            handleOnChangeInput: formsMachine(setForms),
+            Items: incomes,
+            addItems: setMachine(setIncomes, incomes),
           },
           Outcomes: {
-            Items: gastos, 
-            Forms: formsOutcomes,
-            isEditClicked: isEditClicked,
-            editId: editId,
-            isAmountEmpty: isAmountEmpty,
-            isDescriptionEmpty: isDescriptionEmpty,
-            addItems: setMachine(setGastos, gastos, formsOutcomes, setFormsOutcomes),
-            handleOnChangeInput: formsMachine(setFormsOutcomes),
+            Items: outcomes, 
+            addItems: setMachine(setOutcomes, outcomes),
+          },
+          Savings: {
+            Items: savings,
+            addItems: setMachine(setSavings, savings),
+          },
+          Debts: {
+            Items: debts, 
+            addItems: setMachine(setDebts, debts),
           }
           }}
+          
         >
             {children}
         </PersonalFinancesContext.Provider>)

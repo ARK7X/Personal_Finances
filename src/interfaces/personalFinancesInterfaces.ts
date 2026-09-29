@@ -9,6 +9,7 @@ type forms = {
   amount: string;
 };
 
+
 type crud = {
   ADD:string,
   EDIT:string,
@@ -23,6 +24,20 @@ export const OPERATIONS:crud = {
   EDIT_CLICK: "EDIT_CLICK"
 }
 
+export type useCardFunctionalities = {
+  forms:forms
+  isDescriptionEmpty: boolean,
+  isAmountEmpty: boolean,
+  isEditClicked: boolean,
+  editID:string,
+  message: string,
+  formsMachine: (name: string, value:string) => void,
+  formsMachineOnEdit: (description:string, amount:string) => void,
+  handleEditClick: (id:string) => void,
+  handleClean: () => void,
+  handleEditEnd: () => void
+}
+
 
 export type personalFinancesType = {
   Items:item[],
@@ -31,36 +46,44 @@ export type personalFinancesType = {
   Forms:forms,
   isDescriptionEmpty:boolean,
   isAmountEmpty:boolean,
-  handleOnChangeInput: (name: string, value: string) => void,
+  handleOnChangeInput: (name: string, value: string) => void
 }
 
 export type personalFinancesBox = {
   Items:item[],
-  isEditClicked: boolean,
-  editId: string,
-  Forms:forms,
-  isDescriptionEmpty:boolean,
-  isAmountEmpty:boolean,
-  addItems:(operation:string, ID?:string) => void,
-  handleOnChangeInput: (name: string, value: string) => void,
+  addItems:(({operation, description, amount, id}:dataFunction) => void)
 }
 
-export type tools ={
+export type Methods ={
   Incomes:personalFinancesBox,
   Outcomes:personalFinancesBox;
+  Savings:personalFinancesBox;
+  Debts:personalFinancesBox;
+}
+
+export type dataFunction = {
+  operation?: string,
+  description?:string,
+  amount?:string,
+  id?:string
 }
 
 export type FinanceOperation = {
   name:string,
   method: {
     Items:item[],
-    isEditClicked: boolean,
-    editId: string,
-    Forms:forms,
-    isDescriptionEmpty:boolean,
-    isAmountEmpty:boolean,
-    addItems:(operation:string, ID?:string) => void,
-    handleOnChangeInput: (name: string, value: string) => void,
-
+    addItems:(({operation, description, amount, id}:dataFunction) => void) 
   }
+}
+
+type warningMessages = {
+  FILL_WARNING:string,
+  SUCCESS:string,
+  EDIT_WARNING:string,
+}
+
+export const MESSAGES:warningMessages = {
+  FILL_WARNING: "You must fill all the empty spaces",
+  SUCCESS: "Great!",
+  EDIT_WARNING: "You must at least modify one parameter"
 }
