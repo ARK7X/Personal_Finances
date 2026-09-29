@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { tools } from "../interfaces/personalFinancesInterfaces";
+import type { Methods } from "../interfaces/personalFinancesInterfaces";
 
 
-export const PersonalFinancesContext = createContext<tools | undefined>(undefined)
+export const PersonalFinancesContext = createContext<Methods | undefined>(undefined)
