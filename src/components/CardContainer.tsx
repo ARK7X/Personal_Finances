@@ -14,7 +14,7 @@ export const CardContainer = ({name, method}:FinanceOperation) => {
   return (
     <div className="wholeCard">
       <h3>{name}</h3>
-      <div className="main-container container">
+      <div className="main-container">
         <div className="card-container">
         {method.Items.map((item) =>
           isEditClicked &&
@@ -37,7 +37,6 @@ export const CardContainer = ({name, method}:FinanceOperation) => {
             </div>
           ) : (
             <div className="cardItem" key={item.id}>
-              <p>{item.id}</p>
               <p>{item.description}</p>
               <p>{item.amount}</p>
               <InputButton
@@ -65,7 +64,8 @@ export const CardContainer = ({name, method}:FinanceOperation) => {
           isDescriptionEmpty={isDescriptionEmpty}
           editClicked={isEditClicked}
           editId={editID}
-          message={message}
+          message={message.message}
+          classID={message.classID}
           handleConfirmEdit={() => {method.addItems({operation:OPERATIONS.EDIT, description:forms.description, amount:forms.amount, id:editID}); handleEditEnd(); handleClean()}}
           handleOnChangeInput={formsMachine}
           handleSendForm={() => {method.addItems({operation:OPERATIONS.ADD, description:forms.description, amount:forms.amount}); handleClean()}}/>

@@ -9,6 +9,11 @@ type forms = {
   amount: string;
 };
 
+export type Paragraph = {
+  value:string,
+  classID:string
+} 
+
 
 type crud = {
   ADD:string,
@@ -24,13 +29,18 @@ export const OPERATIONS:crud = {
   EDIT_CLICK: "EDIT_CLICK"
 }
 
+type structureMessage = {
+  message:string,
+  classID:string
+}
+
 export type useCardFunctionalities = {
   forms:forms
   isDescriptionEmpty: boolean,
   isAmountEmpty: boolean,
   isEditClicked: boolean,
   editID:string,
-  message: string,
+  message: structureMessage,
   formsMachine: (name: string, value:string) => void,
   formsMachineOnEdit: (description:string, amount:string) => void,
   handleEditClick: (id:string) => void,
@@ -86,4 +96,10 @@ export const MESSAGES:warningMessages = {
   FILL_WARNING: "You must fill all the empty spaces",
   SUCCESS: "Great!",
   EDIT_WARNING: "You must at least modify one parameter"
+}
+
+export const MESSAGE_CLASS:warningMessages = {
+  FILL_WARNING: "fillWarning",
+  SUCCESS: "fillSuccess",
+  EDIT_WARNING: "editWarning"
 }
